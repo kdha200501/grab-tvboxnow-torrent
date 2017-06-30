@@ -1,0 +1,23 @@
+{
+  "name": "grab-tvboxnow-torrent",
+  "version": "1.0.0",
+  "description": "grabs torrent from TVBOXNOW",
+  "bin": {
+    "cli": "bin/cli.js"
+  },
+  "keywords": [
+    "torrent",
+    "tvboxnow"
+  ],
+  "author": "Jacks Diao <kdha200501@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "0.22.0",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-exit": "0.0.2",
+    "jsonfile": "2.4.0",
+    "node-noop": "1.0.0",
+    "safe-access": "0.1.0",
+    "yargs": "6.5.0"
+  }
+}
