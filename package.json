@@ -22,7 +22,6 @@
     "gulp-exit": "0.0.2",
     "jsonfile": "2.4.0",
     "map-stream": "0.0.7",
-    "merge-stream": "1.0.1",
     "node-noop": "1.0.0",
     "queue": "4.0.0",
     "safe-access": "0.1.0",
