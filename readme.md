@@ -6,8 +6,8 @@
 
 ## Install
  - the app
- - authentication
- - subscriptions
+ - authentication config
+ - subscriptions config
 
 #### Step1. Install app
 `$ touch package.json`

@@ -18,7 +18,7 @@
   "dependencies": {
     "cheerio": "0.22.0",
     "fs-extra": "0.30.0",
-    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp": "git+https://github.com/gulpjs/gulp.git#4.0",
     "gulp-exit": "0.0.2",
     "jsonfile": "2.4.0",
     "map-stream": "0.0.7",
