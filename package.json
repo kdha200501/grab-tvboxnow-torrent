@@ -1,6 +1,6 @@
 {
   "name": "grab-tvboxnow-torrent",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "grabs torrent from TVBOXNOW",
   "bin": {
     "cli": "bin/cli.js"
@@ -11,9 +11,9 @@
   ],
   "author": "Jacks Diao <kdha200501@gmail.com>",
   "license": "ISC",
-  "repository" : {
-    "type" : "git",
-    "url" : "https://bitbucket.org/kdha200501/grab-tvboxnow-torrent.git"
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/kdha200501/grab-tvboxnow-torrent.git"
   },
   "dependencies": {
     "cheerio": "0.22.0",
