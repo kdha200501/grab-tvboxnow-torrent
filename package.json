@@ -1,6 +1,6 @@
 {
   "name": "grab-tvboxnow-torrent",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "grabs torrent from TVBOXNOW",
   "bin": {
     "cli": "bin/cli.js"
