@@ -103,7 +103,7 @@ or force download all torrents
 
 	```
 	#! /bin/bash
-	/path/to/node_modules/grab-tvboxnow-torrent/bin/cli.js
+	/path/to/install/directory/node_modules/grab-tvboxnow-torrent/bin/cli.js --workingDirectory=/path/to/install/directory/
 	```
 
 4. schedule execution
