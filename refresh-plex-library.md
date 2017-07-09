@@ -74,11 +74,11 @@ copy+paste:
 
         $ vim /etc/transmission-daemon/settings.json
 
-    insert/modify the following, and remember to change to real paths
+    insert/modify the following, and remember to change to real paths, and then researt Transmission
 
     ```
     {
-      "script-torrent-done-enabled": false,
+      "script-torrent-done-enabled": true,
       "script-torrent-done-filename": "/path/to/refresh-plex-library.command"
     }
     ```
