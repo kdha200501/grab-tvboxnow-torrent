@@ -1,3 +1,7 @@
+# Change Log
+
+# v1.1.0
+
 ## Description
  - asks Plex to refresh library
 
