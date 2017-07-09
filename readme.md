@@ -74,7 +74,7 @@ or with exclusions
 }
 ```
 
-#### Step4. Run app
+#### Step4. Test
 
 `$ npm start`
 
@@ -113,5 +113,5 @@ or force download all torrents
     insert the following, and remember to change to real schedules and real paths
 
     ```
-    min hr1,hr2 * * * /path/to/node_modules/grab-tvboxnow-torrent/bin/cli.js >/dev/null 2>&1
+    min hr1,hr2 * * * /path/to/grab-tvboxnow-torrent.command >/dev/null 2>&1
     ```
