@@ -1,9 +1,12 @@
 # Change Log
 
+# -*-*-*-*-*-*-*-*-
 # v1.1.0
+# -*-*-*-*-*-*-*-*-
 
 ## Description
- - asks Plex to refresh library
+ - assumes installing on a Raspberry Pi
+ - asks Plex server to refresh library
 
 ---
 
@@ -13,9 +16,10 @@
 
 #### Step1. Add to npm script
 
-`$ vim package.json`
+`$ cd /home/pi/grab-tvboxnow-torrent`
+`$ nano package.json`
 
-add:
+add to the "scripts" property:
 
 ```
 {
@@ -29,7 +33,7 @@ add:
 
 `$ touch plex.json`
 
-`$ vim plex.json`
+`$ nano plex.json`
 
 copy+paste:
 
@@ -54,48 +58,68 @@ copy+paste:
 
 ## Schedule run script with Transmission
 
+see `install-transmission.md` for steps to installing and configuring Transmission
+
 1. if `node` is not present under `/usr/bin`
 
 		$ sudo ln –s /usr/bin/nodejs /usr/bin/node
 
 2. create executable
 
-        $ touch refresh-plex-library.command
-        $ chmod u+x refresh-plex-library.command
+        $ sudo touch /etc/transmission-daemon/refresh-plex-library.sh
+        $ sudo chown debian-transmission:debian-transmission /etc/transmission-daemon/refresh-plex-library.sh
+        $ sudo chmod 755 /etc/transmission-daemon/refresh-plex-library.sh
 
 3. paste the following into the executable, and remember to change to real paths
 
-        $ vim refresh-plex-library.command
+        $ sudo nano /etc/transmission-daemon/refresh-plex-library.sh
         
 	copy+paste:
 
 ```
-#! /bin/bash
-/path/to/install/directory/node_modules/grab-tvboxnow-torrent/bin/cli.js refresh-plex-library --workingDirectory=/path/to/install/directory/
+#!/bin/bash
+
+sudo /home/pi/grab-tvboxnow-torrent/node_modules/grab-tvboxnow-torrent/bin/cli.js refresh-plex-library --workingDirectory=/home/pi/grab-tvboxnow-torrent/
 ```
 
-4. schedule execution
+4. add user "debian-transmission" to sudoer:
 
-        $ vim /etc/transmission-daemon/settings.json
+        $ sudo nano /etc/sudoers
+        
+	insert:
 
-    insert/modify the following, and remember to change to real paths
+```
+debian-transmission ALL=(ALL) NOPASSWD: ALL
+```
+
+5. schedule execution
+
+        $ sudo nano /etc/transmission-daemon/settings.json
+
+    modify the following properties:
 
     ```
     {
       "script-torrent-done-enabled": true,
-      "script-torrent-done-filename": "/path/to/refresh-plex-library.command"
+      "script-torrent-done-filename": "/etc/transmission-daemon/refresh-plex-library.sh"
     }
     ```
 
-        $ chmod 750 refresh-plex-library.command
+6. restart Transmission
 
-    restart Transmission
+        $ sudo service transmission-daemon reload
 
+# -*-*-*-*-*-*-*-*-
 # v1.0.0
+# -*-*-*-*-*-*-*-*-
 
 ## Description
+ - assumes installing on a Raspberry Pi
  - grabs torrent links from thread
- - remembers downloaded torrents
+ - tracks downloaded torrents
+ - downloads new torrents only (by default)
+ - allows user to force download previously downloaded torrents
+ - allows user to modify individual torrents' download status
 
 ---
 
@@ -105,9 +129,10 @@ copy+paste:
  - subscriptions config
 
 #### Step1. Install app
+`$ mkdir grab-tvboxnow-torrent`
+`$ cd grab-tvboxnow-torrent`
 `$ touch package.json`
-
-`$ vim package.json`
+`$ nano package.json`
 
 copy+paste:
 
@@ -130,7 +155,7 @@ $ npm i --save grab-tvboxnow-torrent
 
 `$ touch auth.json`
 
-`$ vim auth.json`
+`$ nano auth.json`
 
 copy+paste:
 
@@ -150,7 +175,7 @@ run `$ npm start` to initiate app
 
 `$ touch subscriptions/sample.json`
 
-`$ vim subscriptions/sample.json`
+`$ nano subscriptions/sample.json`
 
 copy+paste:
 
@@ -187,26 +212,27 @@ or force download all torrents
 
 2. create executable
 
-        $ touch grab-tvboxnow-torrent.command
-        $ chmod u+x grab-tvboxnow-torrent.command
+        $ touch grab-tvboxnow-torrent.sh
+        $ chmod 744 grab-tvboxnow-torrent.sh
 
 3. paste the following into the executable, and remember to change to real paths
 
-        $ vim grab-tvboxnow-torrent.command
+        $ nano grab-tvboxnow-torrent.sh
         
 	copy+paste:
 
 ```
-#! /bin/bash
-/path/to/install/directory/node_modules/grab-tvboxnow-torrent/bin/cli.js --workingDirectory=/path/to/install/directory/
+#!/bin/bash
+
+/home/pi/grab-tvboxnow-torrent/node_modules/grab-tvboxnow-torrent/bin/cli.js --workingDirectory=/home/pi/grab-tvboxnow-torrent/
 ```
 
 4. schedule execution
 
-        $ crontab -e
+        $ sudo crontab -e
 
     insert the following, and remember to change to real schedules and real paths
 
     ```
-    min hr1,hr2 * * * /path/to/grab-tvboxnow-torrent.command >/dev/null 2>&1
+    min hr1,hr2 * * * /home/pi/grab-tvboxnow-torrent/grab-tvboxnow-torrent.sh >/dev/null 2>&1
     ```
