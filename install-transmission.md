@@ -11,6 +11,7 @@
 
 ## Known Issues
  - needs to restart transmission upon reboot:
+ 
  `$ sudo service transmission-daemon reload`
 
 ---
@@ -39,9 +40,11 @@ verify the partition is "ext4" and make note of the **UUID**:
 >>>/dev/sda1: Linux rev 1.0 **ext4** filesystem data, UUID=`XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX`, volume name "untitled" (needs journal recovery) (extents) (large files) (huge files)
 
 create mount point:
+
 `$ sudo mkdir -p /mnt/SanDisk16G`
 
 mount:
+
 `$ sudo mount -t ext4 -o defaults /dev/sda1 /mnt/SanDisk16G`
 
 `$ sudo mkdir /mnt/SanDisk16G/transmission-downloads`
@@ -49,16 +52,20 @@ mount:
 `$ sudo chown pi:pi -R /mnt/SanDisk16G/transmission-downloads/`
 
 mount on boot:
+
 `$ sudo nano /etc/fstab`
 
 insert row:
+
 >>>UUID=`XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX` /mnt/SanDisk16G **ext4** defaults 0
 
 ## Resolve Permission Issue
 add user "debian-transmission" to "pi" group:
+
 `$ sudo usermod -a -G pi debian-transmission`
 
 grant read, write and execute permissions to members of the "pi" group:
+
 `$ sudo chmod 770 -R /mnt/SanDisk16G/transmission-downloads/`
 
 `$ sudo chmod 770 -R /home/pi/grab-tvboxnow-torrent/download/`
@@ -66,6 +73,7 @@ grant read, write and execute permissions to members of the "pi" group:
 ## Configure Transmission
 
 {
+
      "alt-speed-down ": 50, 
      
      "alt-speed-enabled ": false,
@@ -92,7 +100,7 @@ grant read, write and execute permissions to members of the "pi" group:
       
      "dht-enabled ": true,
       
-**     "download-dir ":  "/mnt/SanDisk16G/transmission-downloads/ ",**
+     **"download-dir ":  "/mnt/SanDisk16G/transmission-downloads/ ",**
  
      "download-limit ": 100,
       
@@ -108,9 +116,9 @@ grant read, write and execute permissions to members of the "pi" group:
       
      "idle-seeding-limit-enabled ": false,
       
-**     "incomplete-dir ":  "/mnt/SanDisk16G/transmission-downloads/ ",**
+     **"incomplete-dir ":  "/mnt/SanDisk16G/transmission-downloads/ ",**
  
-**     "incomplete-dir-enabled ": false,**
+     **"incomplete-dir-enabled ": false,**
  
      "lpd-enabled ": false,
       
@@ -152,13 +160,13 @@ grant read, write and execute permissions to members of the "pi" group:
       
      "ratio-limit-enabled ": false,
       
-**     "rename-partial-files ": true,**
+     **"rename-partial-files ": true,**
  
-**     "rpc-authentication-required ": false,**
+     **"rpc-authentication-required ": false,**
  
      "rpc-bind-address ":  "0.0.0.0 ",
       
-**     "rpc-enabled ": true,**
+     **"rpc-enabled ": true,**
  
      "rpc-password ":  "{401069afc6f60e688d7dddb7ec581d76b070b180ecoHCqki ",
       
@@ -168,9 +176,9 @@ grant read, write and execute permissions to members of the "pi" group:
       
      "rpc-username ":  "transmission ",
       
-**     "rpc-whitelist ":  "127.0.0.1,192.168.*.* ",**
+     **"rpc-whitelist ":  "127.0.0.1,192.168.*.* ",**
  
-**     "rpc-whitelist-enabled ": true,**
+     **"rpc-whitelist-enabled ": true,**
  
      "scrape-paused-torrents-enabled ": true,
       
@@ -186,15 +194,15 @@ grant read, write and execute permissions to members of the "pi" group:
       
      "speed-limit-down-enabled ": false,
       
-**     "speed-limit-up ": 0,**
+     **"speed-limit-up ": 0,**
  
-**     "speed-limit-up-enabled ": true,**
+     **"speed-limit-up-enabled ": true,**
  
-**     "start-added-torrents ": true,**
+     **"start-added-torrents ": true,**
  
-**     "trash-original-torrent-files ": true,**
+     **"trash-original-torrent-files ": true,**
  
-**     "umask ": 0,**
+     **"umask ": 0,**
  
      "upload-limit ": 100,
       
@@ -204,9 +212,9 @@ grant read, write and execute permissions to members of the "pi" group:
       
      "utp-enabled ": true,
       
-**     "watch-dir ":  "/home/pi/grab-tvboxnow-torrent/download/ ",**
+     **"watch-dir ":  "/home/pi/grab-tvboxnow-torrent/download/ ",**
  
-**     "watch-dir-enabled ": true**
+     **"watch-dir-enabled ": true**
 
 }
 
@@ -215,4 +223,5 @@ grant read, write and execute permissions to members of the "pi" group:
 `$ sudo service transmission-daemon reload`
 
 and then point your Raspberry Pi web browser to:
+
 http://127.0.0.1:9091
