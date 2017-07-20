@@ -26,9 +26,9 @@ plug in USB thumb drive, then find out the name of the partition:
 `$ lsblk`
 
 the partition name is "sda1" in this example:
->>>NAME&nbsp;&nbsp;MAJ:MIN&nbsp;RM&nbsp;&nbsp;SIZE&nbsp;&nbsp;RO&nbsp;TYPE&nbsp;&nbsp;
->>>sda&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8:0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;14.5G&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;disk 
->>>└─**sda1**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8:1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;14.5G&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;part
+>>>NAME  MAJ:MIN RM  SIZE  RO TYPE  
+>>>sda             8:0           1    14.5G  0    disk 
+>>>└─**sda1**     8:1            1    14.5G  0    part
 
 verify the partition is "ext4" and make note of the **UUID**:
 `$ sudo file -sL /dev/sda1`
@@ -60,77 +60,77 @@ grant read, write and execute permissions to members of the "pi" group:
 ## Configure Transmission
 
 {
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;alt-speed-down&quot;: 50, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;alt-speed-enabled&quot;: false, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;alt-speed-time-begin&quot;: 540, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;alt-speed-time-day&quot;: 127, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;alt-speed-time-enabled&quot;: false, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;alt-speed-time-end&quot;: 1020, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;alt-speed-up&quot;: 50, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;bind-address-ipv4&quot;: &quot;0.0.0.0&quot;, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;bind-address-ipv6&quot;: &quot;::&quot;, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;blocklist-enabled&quot;: false, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;blocklist-url&quot;: &quot;http://www.example.com/blocklist&quot;, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;cache-size-mb&quot;: 4, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;dht-enabled&quot;: true, 
-**&nbsp;&nbsp;&nbsp;&nbsp;&quot;download-dir&quot;: &quot;/mnt/SanDisk16G/transmission-downloads/&quot;,** 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;download-limit&quot;: 100, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;download-limit-enabled&quot;: 0, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;download-queue-enabled&quot;: true, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;download-queue-size&quot;: 5, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;encryption&quot;: 1, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;idle-seeding-limit&quot;: 30, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;idle-seeding-limit-enabled&quot;: false, 
-**&nbsp;&nbsp;&nbsp;&nbsp;&quot;incomplete-dir&quot;: &quot;/mnt/SanDisk16G/transmission-downloads/&quot;,** 
-**&nbsp;&nbsp;&nbsp;&nbsp;&quot;incomplete-dir-enabled&quot;: false,** 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;lpd-enabled&quot;: false, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;max-peers-global&quot;: 200, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;message-level&quot;: 1, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;peer-congestion-algorithm&quot;: &quot;&quot;, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;peer-id-ttl-hours&quot;: 6, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;peer-limit-global&quot;: 200, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;peer-limit-per-torrent&quot;: 50, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;peer-port&quot;: 51413, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;peer-port-random-high&quot;: 65535, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;peer-port-random-low&quot;: 49152, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;peer-port-random-on-start&quot;: false, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;peer-socket-tos&quot;: &quot;default&quot;, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;pex-enabled&quot;: true, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;port-forwarding-enabled&quot;: false, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;preallocation&quot;: 1, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;prefetch-enabled&quot;: 1, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;queue-stalled-enabled&quot;: true, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;queue-stalled-minutes&quot;: 30, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;ratio-limit&quot;: 2, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;ratio-limit-enabled&quot;: false, 
-**&nbsp;&nbsp;&nbsp;&nbsp;&quot;rename-partial-files&quot;: true,** 
-**&nbsp;&nbsp;&nbsp;&nbsp;&quot;rpc-authentication-required&quot;: false,** 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;rpc-bind-address&quot;: &quot;0.0.0.0&quot;, 
-**&nbsp;&nbsp;&nbsp;&nbsp;&quot;rpc-enabled&quot;: true,** 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;rpc-password&quot;: &quot;{401069afc6f60e688d7dddb7ec581d76b070b180ecoHCqki&quot;, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;rpc-port&quot;: 9091, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;rpc-url&quot;: &quot;/transmission/&quot;, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;rpc-username&quot;: &quot;transmission&quot;, 
-**&nbsp;&nbsp;&nbsp;&nbsp;&quot;rpc-whitelist&quot;: &quot;127.0.0.1,192.168.&#42;.&#42;&quot;,** 
-**&nbsp;&nbsp;&nbsp;&nbsp;&quot;rpc-whitelist-enabled&quot;: true,** 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;scrape-paused-torrents-enabled&quot;: true, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;script-torrent-done-enabled&quot;: false, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;script-torrent-done-filename&quot;: &quot;&quot;, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;seed-queue-enabled&quot;: false, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;seed-queue-size&quot;: 10, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;speed-limit-down&quot;: 100, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;speed-limit-down-enabled&quot;: false, 
-**&nbsp;&nbsp;&nbsp;&nbsp;&quot;speed-limit-up&quot;: 0,** 
-**&nbsp;&nbsp;&nbsp;&nbsp;&quot;speed-limit-up-enabled&quot;: true,** 
-**&nbsp;&nbsp;&nbsp;&nbsp;&quot;start-added-torrents&quot;: true,** 
-**&nbsp;&nbsp;&nbsp;&nbsp;&quot;trash-original-torrent-files&quot;: true,** 
-**&nbsp;&nbsp;&nbsp;&nbsp;&quot;umask&quot;: 0,** 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;upload-limit&quot;: 100, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;upload-limit-enabled&quot;: 0, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;upload-slots-per-torrent&quot;: 14, 
-&nbsp;&nbsp;&nbsp;&nbsp;&quot;utp-enabled&quot;: true, 
-**&nbsp;&nbsp;&nbsp;&nbsp;&quot;watch-dir&quot;: &quot;/home/pi/grab-tvboxnow-torrent/download/&quot;,** 
-**&nbsp;&nbsp;&nbsp;&nbsp;&quot;watch-dir-enabled&quot;: true**
+     "alt-speed-down ": 50, 
+     "alt-speed-enabled ": false, 
+     "alt-speed-time-begin ": 540, 
+     "alt-speed-time-day ": 127, 
+     "alt-speed-time-enabled ": false, 
+     "alt-speed-time-end ": 1020, 
+     "alt-speed-up ": 50, 
+     "bind-address-ipv4 ":  "0.0.0.0 ", 
+     "bind-address-ipv6 ":  ":: ", 
+     "blocklist-enabled ": false, 
+     "blocklist-url ":  "http://www.example.com/blocklist ", 
+     "cache-size-mb ": 4, 
+     "dht-enabled ": true, 
+**     "download-dir ":  "/mnt/SanDisk16G/transmission-downloads/ ",** 
+     "download-limit ": 100, 
+     "download-limit-enabled ": 0, 
+     "download-queue-enabled ": true, 
+     "download-queue-size ": 5, 
+     "encryption ": 1, 
+     "idle-seeding-limit ": 30, 
+     "idle-seeding-limit-enabled ": false, 
+**     "incomplete-dir ":  "/mnt/SanDisk16G/transmission-downloads/ ",** 
+**     "incomplete-dir-enabled ": false,** 
+     "lpd-enabled ": false, 
+     "max-peers-global ": 200, 
+     "message-level ": 1, 
+     "peer-congestion-algorithm ":  " ", 
+     "peer-id-ttl-hours ": 6, 
+     "peer-limit-global ": 200, 
+     "peer-limit-per-torrent ": 50, 
+     "peer-port ": 51413, 
+     "peer-port-random-high ": 65535, 
+     "peer-port-random-low ": 49152, 
+     "peer-port-random-on-start ": false, 
+     "peer-socket-tos ":  "default ", 
+     "pex-enabled ": true, 
+     "port-forwarding-enabled ": false, 
+     "preallocation ": 1, 
+     "prefetch-enabled ": 1, 
+     "queue-stalled-enabled ": true, 
+     "queue-stalled-minutes ": 30, 
+     "ratio-limit ": 2, 
+     "ratio-limit-enabled ": false, 
+**     "rename-partial-files ": true,** 
+**     "rpc-authentication-required ": false,** 
+     "rpc-bind-address ":  "0.0.0.0 ", 
+**     "rpc-enabled ": true,** 
+     "rpc-password ":  "{401069afc6f60e688d7dddb7ec581d76b070b180ecoHCqki ", 
+     "rpc-port ": 9091, 
+     "rpc-url ":  "/transmission/ ", 
+     "rpc-username ":  "transmission ", 
+**     "rpc-whitelist ":  "127.0.0.1,192.168.*.* ",** 
+**     "rpc-whitelist-enabled ": true,** 
+     "scrape-paused-torrents-enabled ": true, 
+     "script-torrent-done-enabled ": false, 
+     "script-torrent-done-filename ":  " ", 
+     "seed-queue-enabled ": false, 
+     "seed-queue-size ": 10, 
+     "speed-limit-down ": 100, 
+     "speed-limit-down-enabled ": false, 
+**     "speed-limit-up ": 0,** 
+**     "speed-limit-up-enabled ": true,** 
+**     "start-added-torrents ": true,** 
+**     "trash-original-torrent-files ": true,** 
+**     "umask ": 0,** 
+     "upload-limit ": 100, 
+     "upload-limit-enabled ": 0, 
+     "upload-slots-per-torrent ": 14, 
+     "utp-enabled ": true, 
+**     "watch-dir ":  "/home/pi/grab-tvboxnow-torrent/download/ ",** 
+**     "watch-dir-enabled ": true**
 }
 
 ## Restart Transmission
