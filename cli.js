@@ -52,7 +52,7 @@ const { fetchThread } = require('./api/thread/api');
 // const { fetchAttachment } = require('./mock-api/attachment/api');
 const { fetchAttachment } = require('./api/attachment/api');
 
-const cwd = argv.d ?? process.cwd();
+const cwd = argv.d || process.cwd();
 
 /**
  * log error message

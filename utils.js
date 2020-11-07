@@ -81,8 +81,8 @@ function extractUrlPath(href) {
     return undefined;
   }
 
-  const [captureGroup1, captureGroup2] = href.match(regExpUrlPath) ?? [];
-  const captureGroup = captureGroup2 ?? captureGroup1;
+  const [captureGroup1, captureGroup2] = href.match(regExpUrlPath) || [];
+  const captureGroup = captureGroup2 || captureGroup1;
   if (captureGroup === '') {
     return undefined;
   }

@@ -25,7 +25,7 @@ function fetchThread(hostnameOverride, path, cookies) {
     path,
     method: 'GET',
     headers: {
-      Cookie: cookies?.join('; ') ?? '',
+      Cookie: cookies?.join('; ') || '',
     },
   };
 
