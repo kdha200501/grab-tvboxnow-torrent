@@ -32,7 +32,7 @@ function fetchAttachment(hostnameOverride, path, cookies, filePath) {
     path,
     method: 'GET',
     headers: {
-      Cookie: cookies?.join('; ') || '',
+      Cookie: cookies ? cookies.join('; ') : '',
     },
   };
 

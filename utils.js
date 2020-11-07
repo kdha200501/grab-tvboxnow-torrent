@@ -313,7 +313,7 @@ function reconcileAttachments(fileContent, attachments) {
     fileContent.excludeRegexp && new RegExp(fileContent.excludeRegexp, 'i');
 
   return attachments.filter(({ id, text }) => {
-    if (excludeRegexp?.test(text)) {
+    if (excludeRegexp && excludeRegexp.test(text)) {
       return false;
     }
     return !fileContent[id];
