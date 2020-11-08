@@ -45,6 +45,7 @@ $ nano auth.json
 ```shell
 $ grab-tvboxnow-torrent
 ```
+​		The downloaded attachments are saved under the "downloads" folder. For more information on how to configure transmission to watch this folder, see `install-transmission.md` link [here](https://bitbucket.org/kdha200501/grab-tvboxnow-torrent/src/master/install-transmission.md)
 
 ### Options
 
@@ -55,7 +56,7 @@ Usage: grab-tvboxnow-torrent [options]
 Options:
   --version        Show version number                                 [boolean]
   -d, --directory  Specify the working directory, defaults to cwd       [string]
-  -i, --init       Initialize current directory                        [boolean]
+  -i, --init       Initialize the working directory                    [boolean]
   -H, --hostname   Specify the TvBoxNow hostname, defaults to "os.tvboxnow.com"
                                                                         [string]
   -q, --quiet      Do not output to stdout or stderr                   [boolean]
