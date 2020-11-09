@@ -156,8 +156,6 @@ function httpGetSave(subscriber$, options, writePath, redirectHandler) {
       },
     },
     (res) => {
-      res.setEncoding('utf8');
-
       /**
        * @desc if the response is 3XX redirect
        */
