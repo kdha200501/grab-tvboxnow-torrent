@@ -170,18 +170,16 @@ function httpGetSave(subscriber$, options, writePath, redirectHandler) {
         redirectHandler(subscriber$, res.headers.location);
       }
 
-      const data = [];
-      res.on('data', (chunk) => data.push(chunk));
+      const writeStream = createWriteStream(writePath);
 
+      res.on('data', (chunk) => writeStream.write(chunk));
       res.on('end', () => {
-        const writeStream = createWriteStream(writePath);
-        data.forEach((chunk) => writeStream.write(chunk));
         writeStream.end();
         subscriber$.next();
         subscriber$.complete();
       });
-
       res.on('error', (err) => {
+        writeStream.end();
         subscriber$.error(err);
         subscriber$.complete();
       });
