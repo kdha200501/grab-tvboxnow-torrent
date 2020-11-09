@@ -100,7 +100,7 @@ $ sudo nano /etc/transmission-daemon/settings.json
   "start-added-torrents": true,
   "trash-original-torrent-files": true,
   "umask": 0,
-  "watch-dir":  "/home/pi/grab-tvboxnow-torrent/download/",
+  "watch-dir":  "/home/pi/grab-tvboxnow-torrent/downloads/",
   "watch-dir-enabled": true
 }
 ```
@@ -180,7 +180,7 @@ $ sudo nano /etc/transmission-daemon/settings.json
     "upload-limit-enabled": 0,
     "upload-slots-per-torrent": 14,
     "utp-enabled": true,
-    "watch-dir": "/home/osmc/grab-tvboxnow-torrent/download/",
+    "watch-dir": "/home/osmc/grab-tvboxnow-torrent/downloads/",
     "watch-dir-enabled": true
 }
 ```
