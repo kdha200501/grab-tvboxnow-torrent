@@ -233,7 +233,7 @@ if (argv.i) {
 const cookies$ = authenticate();
 const thread$ = listSubscriptionFiles(join(cwd, path.subscriptions));
 
-thread$
+const subscription = thread$
   .pipe(
     // iterate through threads sequentially
     concatMap(({ name }) =>
@@ -266,3 +266,5 @@ thread$
       logError(err);
     }
   }, logError);
+
+process.on('exit', () => subscription.unsubscribe());
