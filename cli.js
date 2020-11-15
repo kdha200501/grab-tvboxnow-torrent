@@ -45,6 +45,7 @@ const {
   extractAttachments,
   reconcileAttachments,
 } = require('./utils');
+const { bufferUntilChanged } = require('./operators/buffer-until-changed');
 // const { signIn } = require('./mock-api/authentication/api');
 const { signIn } = require('./api/authentication/api');
 // const { fetchThread } = require('./mock-api/thread/api');
@@ -202,7 +203,12 @@ function downloadAttachments(fileContent, cookies) {
         attachment.urlPath,
         cookies,
         join(cwd, path.downloads, `${attachment.id}.torrent`)
-      ).pipe(map(() => attachment))
+      ).pipe(
+        map(() => {
+          log(`  attachment: "${attachment.text}" downloaded`);
+          return attachment;
+        })
+      )
     )
   );
 }
@@ -241,14 +247,20 @@ thread$
         }),
         map((attachment) => [name, attachment])
       )
-    )
+    ),
+    bufferUntilChanged(([aName], [bName]) => aName === bName)
   )
-  .subscribe(([name, attachment]) => {
-    log(`  attachment: "${attachment.text}" downloaded`);
+  .subscribe((updates) => {
     try {
+      const [[name]] = updates;
       const filePath = join(cwd, path.subscriptions, name);
       const fileContent = JSON.parse(readFileSync(filePath, 'utf8'));
-      fileContent[attachment.id] = attachment;
+      for (const [_, { id, text }] of updates) {
+        fileContent[id] = {
+          id,
+          text,
+        };
+      }
       writeFileSync(filePath, JSON.stringify(fileContent, null, 2));
     } catch (err) {
       logError(err);
