@@ -138,6 +138,10 @@ function init() {
   }
 }
 
+/**
+ * read credentials from file and sign-in
+ * @return {Observable<string[]>} Token cookies
+ */
 function authenticate() {
   const readPath = join(cwd, path.credentials);
 
@@ -162,6 +166,12 @@ function authenticate() {
   );
 }
 
+/**
+ * list the latest attachments under a thread page
+ * @param {string} urlPath URL path to the thread page
+ * @param {string[]} cookies Cookies
+ * @return {Attachment[]} Attachments from the thread page
+ */
 function listAttachmentsForThread(urlPath, cookies) {
   const hostnameOverride = argv.H;
   return fetchThread(hostnameOverride, urlPath, cookies).pipe(

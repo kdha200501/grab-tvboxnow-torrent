@@ -261,7 +261,7 @@ function extractAttachmentsFromRedirectPage(htmlSource) {
 /**
  * extract attachments from a thread
  * @param {string} htmlSource The HTML source of a thread page
- * @returns {Attachment[]} Attachments from the thread page
+ * @return {Attachment[]} Attachments from the thread page
  */
 function extractAttachments(htmlSource) {
   /**
@@ -304,7 +304,7 @@ function extractAttachments(htmlSource) {
  * to determine which attachment is not already downloaded
  * @param {SubscriptionFileContent} fileContent File content
  * @param {Attachment[]} attachments Attachments freshly pulled from thread
- * @returns {Attachment[]} attachments that are not already downloaded
+ * @return {Attachment[]} attachments that are not already downloaded
  */
 function reconcileAttachments(fileContent, attachments) {
   const excludeRegexp =

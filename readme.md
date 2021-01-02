@@ -1,10 +1,10 @@
 ## Description
 
-CLI tools to scrape attachments off of `TvBoxNow` thread
+A CLI tool to scrape video streams off of a `TvBoxNow` thread, it
 
-- Remembers downloaded attachments
-- Supports user account authentication
-- Option to filter attachments
+- remembers downloaded attachments
+- supports user account authentication
+- provides the option to filter attachments
 
 ## What's new in 2.0
 
@@ -45,7 +45,7 @@ $ nano auth.json
 ```shell
 $ grab-tvboxnow-torrent
 ```
-​		The downloaded attachments are saved under the "downloads" folder. For more information on how to configure transmission to watch this folder, see `install-transmission.md` link [here](https://bitbucket.org/kdha200501/grab-tvboxnow-torrent/src/master/install-transmission.md)
+​		This CLI tool saves the downloaded attachments under the "downloads" folder. For more information on how to configure transmission to watch this folder, see `install-transmission.md` link [here](https://bitbucket.org/kdha200501/grab-tvboxnow-torrent/src/master/install-transmission.md).
 
 ### Options
 

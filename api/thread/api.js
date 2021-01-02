@@ -8,11 +8,11 @@ const {
 const { httpGet } = require('../../utils');
 
 /**
- * request thread HTML source
+ * request a thread page's HTML source
  * @param {string} hostnameOverride Override hostname
- * @param {string} path URL path
+ * @param {string} path URL path to the thread page
  * @param {string[]} cookies Cookies
- * @returns {Observable<string>} HTML source for the requested thread
+ * @return {Observable<string>} HTML source for the requested thread page
  */
 function fetchThread(hostnameOverride, path, cookies) {
   /**

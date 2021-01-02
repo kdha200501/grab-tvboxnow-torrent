@@ -19,7 +19,7 @@ const {
  * @param {string} path URL path
  * @param {string[]} cookies Cookies
  * @param {string} filePath File path to save at
- * @returns {Observable<undefined>} Signal of download completion
+ * @return {Observable<undefined>} Signal of download completion
  */
 function fetchAttachment(hostnameOverride, path, cookies, filePath) {
   /**

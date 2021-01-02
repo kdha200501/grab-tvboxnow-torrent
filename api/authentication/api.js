@@ -12,7 +12,7 @@ const {
  * sign in
  * @param {AccountCredentials} credentials User account credentials
  * @param {string} hostnameOverride Override hostname
- * @returns {Observable<string[]>} Token cookies
+ * @return {Observable<string[]>} Token cookies
  */
 function signIn(credentials, hostnameOverride) {
   /**
