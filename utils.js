@@ -29,7 +29,7 @@ function readTextFile(readPath) {
 /**
  * read file as JSON object
  * @param {string} readPath path to file
- * @return {Observable<string>} Observable of JSON object
+ * @return {Observable<Object>} Observable of JSON object
  */
 function readJsonFile(readPath) {
   return new Observable((subscriber$) => {
@@ -246,6 +246,26 @@ function httpPost(subscriber$, options, payload, cookiesOnly) {
   req.end();
 }
 
+/**
+ * match thread by title
+ * @param {string} htmlSource The HTML source of a thread page
+ * @param {SubscriptionFileContent} fileContent File content
+ * @return {string|undefined} The URL path to the first matching thread
+ */
+function extractThreadUrlPath(htmlSource, fileContent) {
+  const subjectMatchRegexp = new RegExp(fileContent.subjectMatchRegexp, 'i');
+  const matchedThread = Array.from(
+    load(htmlSource)('.subject span[id] a')
+  ).find(($) => subjectMatchRegexp.test(load($).text()));
+
+  return matchedThread && extractUrlPath(matchedThread.attribs.href);
+}
+
+/**
+ * extract attachments from redirect page
+ * @param {string} htmlSource The HTML source of a redirect page
+ * @return {Attachment[]} attachments
+ */
 function extractAttachmentsFromRedirectPage(htmlSource) {
   const attachments = Array.from(load(htmlSource)('a[href^="attachment"]')).map(
     ($) => ({
@@ -326,6 +346,7 @@ module.exports = {
   httpGetSave,
   httpPost,
   extractUrlPath,
+  extractThreadUrlPath,
   extractAttachments,
   extractAttachmentsFromRedirectPage,
   reconcileAttachments,

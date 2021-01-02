@@ -1,5 +1,5 @@
 /**
- * @typedef {{urlPath: string, excludeRegexp: string} | Object.<string, Attachment>} SubscriptionFileContent
+ * @typedef {{urlPath: string, excludeRegexp: string, [subjectUrlPath]: string, [subjectMatchRegexp]: string} | Object.<string, Attachment>} SubscriptionFileContent
  * @typedef {{password: string, username: string}} AccountCredentials
  */
 

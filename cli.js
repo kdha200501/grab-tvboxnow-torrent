@@ -42,6 +42,7 @@ const {
   listSubscriptionFiles,
   readJsonFile,
   extractUrlPath,
+  extractThreadUrlPath,
   extractAttachments,
   reconcileAttachments,
 } = require('./utils');
@@ -49,6 +50,8 @@ const { bufferUntilChanged } = require('./operators/buffer-until-changed');
 // const { signIn } = require('./mock-api/authentication/api');
 const { signIn } = require('./api/authentication/api');
 // const { fetchThread } = require('./mock-api/thread/api');
+const { fetchTopic } = require('./api/topic/api');
+// const { fetchTopic } = require('./mock-api/topic/api');
 const { fetchThread } = require('./api/thread/api');
 // const { fetchAttachment } = require('./mock-api/attachment/api');
 const { fetchAttachment } = require('./api/attachment/api');
@@ -167,6 +170,44 @@ function authenticate() {
 }
 
 /**
+ * read the content of a subscription file. Update URL path if the subscription targets a topic
+ * @param {string} hostnameOverride Override hostname
+ * @param {string} readPath path to file
+ * @param {string[]} cookies Cookies
+ * @return {Observable<SubscriptionFileContent>} The subscription file's content
+ */
+function readSubscriptionFile(hostnameOverride, readPath, cookies) {
+  return readJsonFile(readPath).pipe(
+    switchMap((fileContent) => {
+      // if subscription is not a topic
+      if (!fileContent.subjectUrlPath || !fileContent.subjectMatchRegexp) {
+        return of(fileContent);
+      }
+
+      // if subscription is a topic
+      return fetchTopic(
+        hostnameOverride,
+        extractUrlPath(fileContent.subjectUrlPath),
+        cookies
+      ).pipe(
+        switchMap((html) => {
+          const urlPath = extractThreadUrlPath(html, fileContent);
+          if (!urlPath) {
+            log('  no matching topic found');
+            return of();
+          }
+
+          return of({
+            ...fileContent,
+            urlPath,
+          });
+        })
+      );
+    })
+  );
+}
+
+/**
  * list the latest attachments under a thread page
  * @param {string} urlPath URL path to the thread page
  * @param {string[]} cookies Cookies
@@ -186,6 +227,11 @@ function listAttachmentsForThread(urlPath, cookies) {
  * @return {Observable<Attachment>} Downloaded attachment
  */
 function downloadAttachments(fileContent, cookies) {
+  if (!fileContent.urlPath) {
+    log(`  invalid URL path: "${fileContent.urlPath}"`);
+    return of();
+  }
+
   /**
    * @type {Observable<Attachment>}
    */
@@ -247,15 +293,18 @@ const subscription = thread$
   .pipe(
     // iterate through threads sequentially
     concatMap(({ name }) =>
-      combineLatest(
-        readJsonFile(join(cwd, path.subscriptions, name)),
-        cookies$
-      ).pipe(
-        switchMap(([fileContent, cookies]) => {
+      combineLatest(of(name), cookies$).pipe(
+        switchMap(([name, cookies]) => {
           log(`thread: "${name}"`);
-          return downloadAttachments(fileContent, cookies);
-        }),
-        map((attachment) => [name, attachment])
+          const readPath = join(cwd, path.subscriptions, name);
+          const hostnameOverride = argv.H;
+          return readSubscriptionFile(hostnameOverride, readPath, cookies).pipe(
+            switchMap((fileContent) =>
+              downloadAttachments(fileContent, cookies)
+            ),
+            map((attachment) => [name, attachment])
+          );
+        })
       )
     ),
     bufferUntilChanged(([aName], [bName]) => aName === bName)
