@@ -32,20 +32,20 @@ $ nano subscriptions/sample.json
 $ touch subscriptions/another-thread.json
 ```
 
-### Advanced threads
-A subject can spans over multiple threads over a long period. A News subject is a good example.
+### Manage subjects
+A subject can span over multiple threads over a long period of time. For example, a News subject can spawn a new thread on a monthly basis.
 ```shell
-$ touch subscriptions/subject-example.json
-$ nano subscriptions/subject-example.json
+$ touch subscriptions/news-subject.json
+$ nano subscriptions/news-subject.json
 ```
-To set up a subject, use the following settings: 
+Using a TVB news thread as an example, one can set up a subject as follows: 
 ```json
 {
   "subjectUrlPath": "forum-497-1.html",
   "subjectMatchRegexp": "(?=.*TVB)(?=.*新聞)(?=.*六點半)"
 }
 ```
-note: this regular expression matches the first thread whose title contains all the words
+note: the regular expression in this example matches the first thread whose title contains all the words
 
 ### Credentials
 
