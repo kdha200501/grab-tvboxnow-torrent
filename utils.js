@@ -2,7 +2,7 @@ const { readFile, readdirSync, createWriteStream } = require('fs');
 const { request } = require('https');
 const { stringify, ParsedUrlQueryInput } = require('querystring');
 const { Observable, Subscriber, of, throwError } = require('rxjs');
-const { load } = require('cheerio');
+const { load, html } = require('cheerio');
 const { compact } = require('lodash');
 
 const { regExpUrlPath } = require('./const');
@@ -256,7 +256,7 @@ function extractThreadUrlPath(htmlSource, fileContent) {
   const subjectMatchRegexp = new RegExp(fileContent.subjectMatchRegexp, 'i');
   const matchedThread = Array.from(
     load(htmlSource)('.subject span[id] a')
-  ).find(($) => subjectMatchRegexp.test(load($).text()));
+  ).find(($) => subjectMatchRegexp.test(load(html($)).text()));
 
   return matchedThread && extractUrlPath(matchedThread.attribs.href);
 }
@@ -270,7 +270,7 @@ function extractAttachmentsFromRedirectPage(htmlSource) {
   const attachments = Array.from(load(htmlSource)('a[href^="attachment"]')).map(
     ($) => ({
       id: $.attribs.id,
-      text: load($).text(),
+      text: load(html($)).text(),
       urlPath: extractUrlPath($.attribs.href),
     })
   );
@@ -294,7 +294,7 @@ function extractAttachments(htmlSource) {
     load(htmlSource)('a[href^="attachment"]')
   ).map(($) => ({
     id: $.attribs.id,
-    text: load($).text(),
+    text: load(html($)).text(),
     urlPath: extractUrlPath($.attribs.href),
   }));
 
@@ -310,7 +310,7 @@ function extractAttachments(htmlSource) {
     load(htmlSource)('span a[href^="attachment"]')
   ).map(($) => ({
     id: $.parent.attribs.id,
-    text: load($).text(),
+    text: load(html($)).text(),
     urlPath: extractUrlPath($.attribs.href),
   }));
 
