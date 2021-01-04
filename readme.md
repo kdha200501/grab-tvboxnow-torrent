@@ -45,7 +45,7 @@ Using a TVB news thread as an example, one can set up a subject as follows:
   "subjectMatchRegexp": "(?=.*TVB)(?=.*新聞)(?=.*六點半)"
 }
 ```
-note: the regular expression in this example matches the first thread whose title contains all the words
+note: the CLI takes the first thread that matches the regular expression, and this particular regular expression describes a pattern that contains all three words
 
 ### Credentials
 
