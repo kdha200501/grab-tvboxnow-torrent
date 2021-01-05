@@ -1,1 +1,10 @@
-mock-api
+node_modules/
+mock-api/
+test-dir/
+.idea/
+
+.eslintignore
+.eslintrc
+.huskyrc
+.lintstagedrc
+.prettierrc
