@@ -309,21 +309,29 @@ const subscription = thread$
     ),
     bufferUntilChanged(([aName], [bName]) => aName === bName)
   )
-  .subscribe((updates) => {
-    try {
-      const [[name]] = updates;
-      const filePath = join(cwd, path.subscriptions, name);
-      const fileContent = JSON.parse(readFileSync(filePath, 'utf8'));
-      for (const [_, { id, text }] of updates) {
-        fileContent[id] = {
-          id,
-          text,
-        };
+  .subscribe({
+    next: (updates) => {
+      try {
+        const [[name]] = updates;
+        const filePath = join(cwd, path.subscriptions, name);
+        const fileContent = JSON.parse(readFileSync(filePath, 'utf8'));
+        for (const [_, { id, text }] of updates) {
+          fileContent[id] = {
+            id,
+            text,
+          };
+        }
+        writeFileSync(filePath, JSON.stringify(fileContent, null, 2));
+      } catch (err) {
+        logError(err);
       }
-      writeFileSync(filePath, JSON.stringify(fileContent, null, 2));
-    } catch (err) {
+    },
+    error: (err) => {
       logError(err);
-    }
-  }, logError);
+    },
+    complete: () => {
+      process.exit(0);
+    },
+  });
 
 process.on('exit', () => subscription.unsubscribe());

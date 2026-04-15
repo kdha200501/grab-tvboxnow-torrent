@@ -26,19 +26,19 @@ function bufferUntilChanged(comparator) {
           : prev === value;
       }
 
-      const subscription = source$.subscribe(
-        (curr) =>
+      const subscription = source$.subscribe({
+        next: (curr) =>
           buffer.length === 0 || _sameAsTop(curr)
             ? _pushToStack(curr)
             : subscriber.next(_popEntireStackAndPush(curr)),
-        subscriber.error,
-        () => {
+        error: (err) => subscriber.error(err),
+        complete: () => {
           if (buffer.length > 0) {
             subscriber.next(_popEntireStack());
           }
           subscriber.complete();
-        }
-      );
+        },
+      });
 
       return () => subscription.unsubscribe();
     });
