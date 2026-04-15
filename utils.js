@@ -2,7 +2,7 @@ const { readFile, readdirSync, createWriteStream } = require('fs');
 const { request } = require('https');
 const { stringify, ParsedUrlQueryInput } = require('querystring');
 const { Observable, Subscriber, of, throwError } = require('rxjs');
-const { load, html } = require('cheerio');
+const { load } = require('cheerio');
 const { compact } = require('lodash');
 
 const { regExpUrlPath } = require('./const');
@@ -254,9 +254,10 @@ function httpPost(subscriber$, options, payload, cookiesOnly) {
  */
 function extractThreadUrlPath(htmlSource, fileContent) {
   const subjectMatchRegexp = new RegExp(fileContent.subjectMatchRegexp, 'i');
-  const matchedThread = Array.from(
-    load(htmlSource)('.subject span[id] a')
-  ).find(($) => subjectMatchRegexp.test(load(html($)).text()));
+  const $doc = load(htmlSource);
+  const matchedThread = Array.from($doc('.subject span[id] a')).find(($) =>
+    subjectMatchRegexp.test($doc($).text())
+  );
 
   return matchedThread && extractUrlPath(matchedThread.attribs.href);
 }
@@ -267,13 +268,12 @@ function extractThreadUrlPath(htmlSource, fileContent) {
  * @return {Attachment[]} attachments
  */
 function extractAttachmentsFromRedirectPage(htmlSource) {
-  const attachments = Array.from(load(htmlSource)('a[href^="attachment"]')).map(
-    ($) => ({
-      id: $.attribs.id,
-      text: load(html($)).text(),
-      urlPath: extractUrlPath($.attribs.href),
-    })
-  );
+  const $doc = load(htmlSource);
+  const attachments = Array.from($doc('a[href^="attachment"]')).map(($) => ({
+    id: $.attribs.id,
+    text: $doc($).text(),
+    urlPath: extractUrlPath($.attribs.href),
+  }));
 
   return compact(attachments);
 }
@@ -290,13 +290,14 @@ function extractAttachments(htmlSource) {
    *   HelloWorld.torrent
    * </a>
    */
-  const type1Attachments = Array.from(
-    load(htmlSource)('a[href^="attachment"]')
-  ).map(($) => ({
-    id: $.attribs.id,
-    text: load(html($)).text(),
-    urlPath: extractUrlPath($.attribs.href),
-  }));
+  const $doc = load(htmlSource);
+  const type1Attachments = Array.from($doc('a[href^="attachment"]')).map(
+    ($) => ({
+      id: $.attribs.id,
+      text: $doc($).text(),
+      urlPath: extractUrlPath($.attribs.href),
+    })
+  );
 
   /**
    * @desc Type 2 attachment sample:
@@ -306,13 +307,13 @@ function extractAttachments(htmlSource) {
    *   </a>
    * </span>
    */
-  const type2Attachments = Array.from(
-    load(htmlSource)('span a[href^="attachment"]')
-  ).map(($) => ({
-    id: $.parent.attribs.id,
-    text: load(html($)).text(),
-    urlPath: extractUrlPath($.attribs.href),
-  }));
+  const type2Attachments = Array.from($doc('span a[href^="attachment"]')).map(
+    ($) => ({
+      id: $.parent.attribs.id,
+      text: $doc($).text(),
+      urlPath: extractUrlPath($.attribs.href),
+    })
+  );
 
   return [...type1Attachments, ...type2Attachments].filter(({ id }) =>
     Boolean(id)
