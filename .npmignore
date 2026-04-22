@@ -1,0 +1,10 @@
+.claude
+.idea/
+node_modules/
+
+.eslintignore
+.eslintrc
+.gitignore
+.huskyrc
+.lintstagedrc
+.prettierrc
