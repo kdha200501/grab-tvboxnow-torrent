@@ -119,17 +119,9 @@ const httpGetRedirect = (options) =>
             }
 
             // if the response is not redirected,
-            // then retrieve the response body
-            res.setEncoding('utf8');
-            const data = [];
-            res.on('data', (chunk) => data.push(chunk));
-            res.on('end', () => {
-              subscriber.next([path, null, data.join('')]);
-              subscriber.complete();
-            });
-            res.on('error', (err) => {
-              subscriber.error(err);
-            });
+            // then do not retry
+            subscriber.next([null, null, null]);
+            subscriber.complete();
           }
         );
 

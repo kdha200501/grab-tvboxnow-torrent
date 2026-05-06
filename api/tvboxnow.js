@@ -156,8 +156,17 @@ const downloadTorrent = (
 
   return httpGetRedirect(options).pipe(
     map((html) => {
-      const [first] = extractAttachmentsFromRedirectPage(html);
-      return first.urlPath;
+      // if there is no redirect
+      if (!html) {
+        // then download from the torrent URL path directly
+        return torrentUrlPath;
+      }
+
+      const [{ urlPath }] = extractAttachmentsFromRedirectPage(html);
+
+      // if there is redirect,
+      // then download from the relocated URL path
+      return urlPath;
     }),
     mergeMap((path) => httpGetSave({ ...options, path }, torrentFilePath)),
     map(() => true),
